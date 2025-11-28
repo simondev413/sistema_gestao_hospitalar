@@ -32,6 +32,9 @@ from usuarios.viewsets import (
     PacienteViewSet
     )
 
+from consultas.viewsets import ConsultaViewSet,ExameviewSets,AgendamentoViewSet,PrescricaoViewSet
+from dados_medicos.viewsets import HistoricoMedicoViewSet
+
 
 routes = DefaultRouter()
 
@@ -51,6 +54,12 @@ routes.register(r'funcionarios',FuncionarioViewSet,basename='funcionarios')
 routes.register(r'medicos',MedicoViewSet,basename='medicos')
 routes.register(r'recepcionistas',RecepcionistaViewSet,basename='recepcionistas')
 routes.register(r'pacientes',PacienteViewSet,basename='pacientes')
+routes.register(r'consultas',ConsultaViewSet,basename='consultas')
+routes.register(r'prescricoes',PrescricaoViewSet,basename='prescricoes')
+routes.register(r'exames',ExameviewSets,basename='exames')
+routes.register(r'agendamentos',AgendamentoViewSet,basename='agendamentoa')
+routes.register(r'historicos-medico',HistoricoMedicoViewSet,basename='historico-medico')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
