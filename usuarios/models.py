@@ -39,13 +39,13 @@ class Usuario(AbstractBaseUser,PermissionsMixin):
     Model genérico para todo usuário do sistema
     """
     GENERO_CHOICES = {
-        'M':'Masculino',
-        'F':'Feminino'
+        ('M','Masculino'),
+        ('F','Feminino')
     }
     TIPO_CHOICES = {
-        'admin':'Administrador',
-        'funcionario':'Funcionário',
-        'paciente':'Paciente'
+        ('admin','Administrador'),
+        ('funcionario','Funcionário'),
+        ('paciente','Paciente')
     }
 
     nome = models.CharField(max_length=45,verbose_name='Primeiro Nome')
@@ -54,7 +54,7 @@ class Usuario(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField(unique=True)
     tipo = models.CharField(max_length=15,choices=TIPO_CHOICES)
     genero = models.CharField(max_length=12,choices=GENERO_CHOICES)
-    img = models.ImageField(upload_to=f'statics/imgs/usuarios')
+    img = models.ImageField(upload_to=f'statics/imgs/usuarios',null=True,blank=True)
     data_nascimento = models.DateField(verbose_name='Data de Nascimento')
     data_criacao = models.DateTimeField(auto_now_add=True)
     ultima_atualizacao = models.DateTimeField(auto_now=True)
