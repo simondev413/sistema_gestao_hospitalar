@@ -1,4 +1,4 @@
 django
-rest_framework
+djangorestframework
 rest_framework_simplejwt
 drf_yasg
