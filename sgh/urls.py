@@ -32,6 +32,8 @@ from usuarios.viewsets import (
     PacienteViewSet
     )
 
+from usuarios.auth_doc_view import LoginDocView,LogoutDocView
+
 from consultas.viewsets import ConsultaViewSet,ExameviewSets,AgendamentoViewSet,PrescricaoViewSet
 from dados_medicos.viewsets import HistoricoMedicoViewSet
 
@@ -61,14 +63,21 @@ routes.register(r'agendamentos',AgendamentoViewSet,basename='agendamentoa')
 routes.register(r'historicos-medico',HistoricoMedicoViewSet,basename='historico-medico')
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # Documentação Swagger e Redoc
-    path('api/v1/doc/<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('api/v1/doc/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('api/v1/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    # Swagger
+    path('api/v1/doc/<format>/', schema_view.without_ui(cache_timeout=0)),
+    path('api/v1/doc/', schema_view.with_ui('swagger')),
+    path('api/v1/redoc/', schema_view.with_ui('redoc')),
 
-    path('api/v1/auth/',include('rest_framework.urls'),name='api-auth'),
-    path('api/v1/',include(routes.urls),name='drf_api')
+    # Rotas reais do DRF
+    path('api/v1/auth/', include('rest_framework.urls')),
+
+    # Rotas documentadas
+    path('api/v1/auth/docs/login/', LoginDocView.as_view(), name='auth-login-doc'),
+    path('api/v1/auth/docs/logout/', LogoutDocView.as_view(), name='auth-logout-doc'),
+
+    path('api/v1/', include(routes.urls)),
 ]
