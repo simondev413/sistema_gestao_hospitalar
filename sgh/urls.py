@@ -26,7 +26,7 @@ admin.site.index_title = 'Sistema de Gestão Hospitalar'
 from rest_framework.routers import DefaultRouter
 from drf_yasg import views,openapi
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from usuarios.views import logout_view
+from usuarios.views import logout_view,user_data
 
 
 
@@ -81,6 +81,8 @@ urlpatterns = [
     path('api/v1/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1/auth/logout/', logout_view, name='logout'),
+
+    path('api/v1/me',user_data,name='user-metadata'),
 
     # Rotas documentadas
     path('api/v1/auth/docs/login/', LoginDocView.as_view(), name='auth-login-doc'),
