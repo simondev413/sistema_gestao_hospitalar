@@ -1,9 +1,5 @@
-from rest_framework.serializers import ModelSerializer,HyperlinkedRelatedField
+from rest_framework.serializers import ModelSerializer,HyperlinkedRelatedField #type:ignore
 from .models import Usuario,Paciente,Medico,Funcionario,Recepcionista
-
-from django.contrib.auth.models import Permission,Group
-
-
 
 
 class UsuarioSerializer(ModelSerializer):
@@ -15,15 +11,16 @@ class UsuarioSerializer(ModelSerializer):
 
         }
 
-    def create(self, validated_data):
-        user = Usuario(email=self.validated_data['email'])
-        user.data_nascimento = self.validated_data['data_nascimento']
-        user.set_password(self.validated_data['password'])
-        user.save()
-
-        group = validated_data['groups'][0]
-        user.groups.set(Group.objects.filter(name=group))
-        user.user_permissions.set(Permission.objects.filter(group=group))
+    def create(self, validated_data:dict[str,str]):
+        user = Usuario(email=self.validated_data['email']) #type:ignore
+        user.nome = self.validated_data['nome'] #type:ignore
+        user.sobrenome = self.validated_data['sobrenome'] #type:ignore
+        user.telefone = self.validated_data['telefone'] #type:ignore
+        user.tipo = self.validated_data['tipo'] #type:ignore
+        user.data_nascimento = self.validated_data['data_nascimento'] #type:ignore
+        user.genero = self.validated_data['genero'] #type:ignore
+        user.img = self.validated_data['img'] #type:ignore
+        user.set_password(self.validated_data['password']) #type:ignore
         user.save()
         return user
     
