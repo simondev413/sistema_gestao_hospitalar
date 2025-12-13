@@ -5,6 +5,9 @@ from django.contrib import admin
 from drf_yasg import openapi, views
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from drf_yasg import views,openapi
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from usuarios.views import logout_view,user_data
 
 from usuarios.views import logout_view
 from usuarios.auth_doc_view import LoginDocView, LogoutDocView
@@ -46,9 +49,12 @@ urlpatterns = [
     path('api/v1/doc/', schema_view.with_ui('swagger')),
     path('api/v1/redoc/', schema_view.with_ui('redoc')),
 
+      # Autenticação JWT
     path('api/v1/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1/auth/logout/', logout_view, name='logout'),
+
+    path('api/v1/me',user_data,name='user-metadata'),
 
     path('api/v1/auth/docs/login/', LoginDocView.as_view(), name='auth-login-doc'),
     path('api/v1/auth/docs/logout/', LogoutDocView.as_view(), name='auth-logout-doc'),
