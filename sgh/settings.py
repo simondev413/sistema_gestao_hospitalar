@@ -25,7 +25,17 @@ SECRET_KEY = 'django-insecure-5^fzxl0bj$^jic@*nn@#&iobw*^m#*-k12@9m!sx_gj=aiap&*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
+# LISTA HOSTS PERMITIDOS
+ALLOWED_HOSTS = [ 
+    "http://localhost:5000",
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "http://120.0.0.1:5000",
+    "http://120.0.0.1:3000",
+    "http://120.0.0.1:8000",
+    "*"
+    ] # O * significa que todos os hosts são permitidos
 
 
 # Application definition
@@ -42,6 +52,7 @@ INSTALLED_APPS = [
     'pagamentos',
     'farmacia',
     'drf_yasg',
+    "corsheaders",
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist'
@@ -76,7 +87,28 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5000",
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "http://120.0.0.1:5000",
+    "http://120.0.0.1:3000",
+    "http://120.0.0.1:8000",
+    "*"
+]
+
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
 
 ROOT_URLCONF = 'sgh.urls'
 
