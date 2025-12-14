@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer,HyperlinkedRelatedField #type:ignore
+from rest_framework.serializers import ModelSerializer,PrimaryKeyRelatedField,ValidationError #type:ignore
 from .models import Usuario,Paciente,Medico,Funcionario,Recepcionista
 
 
@@ -26,26 +26,60 @@ class UsuarioSerializer(ModelSerializer):
     
 
 class FuncionarioSerializer(ModelSerializer):
-    usuario = HyperlinkedRelatedField(many=False,view_name='usuarios-detail',read_only=True)
+    usuario_id = PrimaryKeyRelatedField(
+        queryset=Usuario.objects.all(),
+        source='usuario',
+        write_only=True
+    )
+
+    usuario = UsuarioSerializer(read_only=True)
+
     class Meta:
         model = Funcionario
         fields = '__all__'
-
+  
 class MedicoSerializer(ModelSerializer):
-    funcionario = HyperlinkedRelatedField(many=False,view_name='funcionarios-detail',read_only=True)
+    
+    funcionario_id = PrimaryKeyRelatedField(
+        queryset=Funcionario.objects.all(),
+        source='funcionario',
+        write_only=True
+    )
+
+
+    funcionario = FuncionarioSerializer(read_only=True)
+
     class Meta:
         model = Medico
         fields = '__all__'
 
 
 class RecepcionistaSerializer(ModelSerializer):
-    funcionario = HyperlinkedRelatedField(many=False,view_name='funcionarios-detail',read_only=True)
+    
+    funcionario_id = PrimaryKeyRelatedField(
+        queryset=Funcionario.objects.all(),
+        source='funcionario',
+        write_only=True
+    )
+
+    
+    funcionario = FuncionarioSerializer(read_only=True)
+
     class Meta:
         model = Recepcionista
         fields = '__all__'
 
 class PacienteSerializer(ModelSerializer):
-    usuario = HyperlinkedRelatedField(many=False,view_name='usuarios-detail',read_only=True)
+    # 👉 entrada
+    usuario_id = PrimaryKeyRelatedField(
+        queryset=Usuario.objects.all(),
+        source='usuario',
+        write_only=True
+    )
+
+    # 👉 saída
+    usuario = UsuarioSerializer(read_only=True)
+
     class Meta:
         model = Paciente
         fields = '__all__'
