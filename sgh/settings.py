@@ -46,11 +46,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'usuarios',
     'consultas',
     'dados_medicos',
     'pagamentos',
     'farmacia',
+    'agendamentos',
+
     'drf_yasg',
     "corsheaders",
     'rest_framework',
