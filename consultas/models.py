@@ -14,25 +14,8 @@ class Consulta(models.Model):
     status = models.CharField(max_length=15,choices=STATUS)
     data_consulta = models.DateTimeField(blank=True,null=True)
     data_criacao = models.DateTimeField(auto_now_add=True)
-    agendamento = models.OneToOneField('consultas.Agendamento',on_delete=models.CASCADE)
+    agendamento = models.OneToOneField('agendamentos.Agendamento',on_delete=models.CASCADE)
 
-class Agendamento(models.Model):
-    MODELO_CHOICES = {
-        'presencial':'Presencial',
-        'online':'Online'
-    }
-    
-    STATUS = {
-        'agendado':'Agendado',
-        'em espera':'Em espera'
-    }
-
-    motivo = models.TextField(max_length=500)
-    data_consulta = models.DateTimeField(null=True,blank=True)
-    data_criacao = models.DateTimeField(auto_now_add=True)
-    modelo = models.CharField(max_length=12,choices=MODELO_CHOICES)
-    profisional = models.ForeignKey('usuarios.Medico',on_delete=models.CASCADE)
-    paciente = models.ForeignKey('usuarios.Paciente',on_delete=models.CASCADE)
 
 class ExameSolicitado(models.Model):
     STATUS = {
