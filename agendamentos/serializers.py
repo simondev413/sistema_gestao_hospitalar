@@ -93,11 +93,11 @@ class AgendamentoSerializer(serializers.ModelSerializer):
             )
 
         
-        dia_semana = data_consulta.weekday()
+        
 
         disponibilidade = DisponibilidadeMedico.objects.filter(
             doutor=doutor,
-            dia_semana=dia_semana,
+            data=data_consulta,
             hora_inicio__lte=hora_inicio,
             hora_fim__gte=hora_fim,
             is_active=True
