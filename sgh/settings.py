@@ -52,18 +52,26 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Apps do sistema
     'usuarios',
     'consultas',
     'dados_medicos',
     'pagamentos',
     'farmacia',
+    'agendamentos',
 
+    # APIs
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+
+    # Swagger / Docs
     'drf_yasg',
-    'corsheaders', 
+
+    # CORS
+    'corsheaders',
 ]
+
 
 
 REST_FRAMEWORK = {

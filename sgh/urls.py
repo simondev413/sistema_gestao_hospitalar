@@ -12,11 +12,23 @@ from usuarios.views import logout_view,user_data
 from usuarios.views import logout_view
 from usuarios.auth_doc_view import LoginDocView, LogoutDocView
 from usuarios.viewsets import (
-    UsuarioViewSet, FuncionarioViewSet, MedicoViewSet,
-    RecepcionistaViewSet, PacienteViewSet
-)
-from consultas.viewsets import ConsultaViewSet, ExameviewSets, AgendamentoViewSet, PrescricaoViewSet
+    UsuarioViewSet,FuncionarioViewSet,
+    MedicoViewSet,RecepcionistaViewSet,
+    PacienteViewSet
+    )
+
+from usuarios.auth_doc_view import LoginDocView,LogoutDocView
+
+from consultas.viewsets import ConsultaViewSet,ExameviewSets,PrescricaoViewSet
+
+from agendamentos.viewsets import AgendamentoViewSet,DisponibilidadeMedicoViewSet
 from dados_medicos.viewsets import HistoricoMedicoViewSet
+
+from farmacia.viewsets import  SaidaMedicamentoViewSet,MedicamentoViewSet
+from pagamentos.viewsets import PagamentoViewSet,FaturaViewSet,ReciboViewSet
+
+
+routes = DefaultRouter()
 
 schema_view = views.get_schema_view(
     openapi.Info(
@@ -29,17 +41,24 @@ schema_view = views.get_schema_view(
     public=True,
 )
 
-routes = DefaultRouter()
-routes.register(r'usuarios', UsuarioViewSet, basename='usuarios')
-routes.register(r'funcionarios', FuncionarioViewSet, basename='funcionarios')
-routes.register(r'medicos', MedicoViewSet, basename='medicos')
-routes.register(r'recepcionistas', RecepcionistaViewSet, basename='recepcionistas')
-routes.register(r'pacientes', PacienteViewSet, basename='pacientes')
-routes.register(r'consultas', ConsultaViewSet, basename='consultas')
-routes.register(r'prescricoes', PrescricaoViewSet, basename='prescricoes')
-routes.register(r'exames', ExameviewSets, basename='exames')
-routes.register(r'agendamentos', AgendamentoViewSet, basename='agendamentos')
-routes.register(r'historicos-medico', HistoricoMedicoViewSet, basename='historicos-medico')
+routes.register(r'usuarios',UsuarioViewSet,basename='usuarios')
+routes.register(r'funcionarios',FuncionarioViewSet,basename='funcionarios')
+routes.register(r'medicos',MedicoViewSet,basename='medicos')
+routes.register(r'recepcionistas',RecepcionistaViewSet,basename='recepcionistas')
+routes.register(r'pacientes',PacienteViewSet,basename='pacientes')
+routes.register(r'consultas',ConsultaViewSet,basename='consultas')
+routes.register(r'prescricoes',PrescricaoViewSet,basename='prescricoes')
+routes.register(r'exames',ExameviewSets,basename='exames')
+routes.register(r'agendamentos',AgendamentoViewSet,basename='agendamentos')
+routes.register(r'disponibilidade-medico',DisponibilidadeMedicoViewSet,basename='disponibilidade-medico')
+routes.register(r'historicos-medico',HistoricoMedicoViewSet,basename='historico-medico')
+routes.register(r'medicamentos',MedicamentoViewSet,basename='medicamentos')
+routes.register(r'saida-medicamentos',SaidaMedicamentoViewSet,basename='saida-medicamentos')
+routes.register(r'pagamentos',PagamentoViewSet,basename='pagamentos')
+routes.register(r'faturas',FaturaViewSet,basename='faturas')
+routes.register(r'recibos',ReciboViewSet,basename='recibos')
+
+
 
 
 urlpatterns = [
