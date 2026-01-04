@@ -65,23 +65,13 @@ class Agendamento(models.Model):
         return f'{self.paciente} - {self.data} {self.hora_inicio}'
 
 class DisponibilidadeMedico(models.Model):
-    DIA_SEMANAS = (
-        (0, 'Segunda'),
-        (1, 'Terça'),
-        (2, 'Quarta'),
-        (3, 'Quinta'),
-        (4, 'Sexta'),
-        (5, 'Sábado'),
-        (6, 'Domingo'),
-    )
+
     doutor = models.ForeignKey(
         'usuarios.Medico',
         on_delete=models.CASCADE,
         related_name='availabilities'
     )
-
-    dia_semana = models.IntegerField(choices=DIA_SEMANAS)
-
+    data  = models.DateField()
     hora_inicio = models.TimeField()
     hora_fim = models.TimeField()
 
@@ -93,8 +83,7 @@ class DisponibilidadeMedico(models.Model):
         verbose_name = 'Disponibilidade do Médico'
         verbose_name_plural = 'Disponibilidades dos Médicos'
 
-    def mostrar_dia_semana(self):
-        return self.dia_semana
+    
 
     def __str__(self):
-        return f'{self.doutor} - {self.mostrar_dia_semana()}'
+        return f'{self.doutor} - {self.data}'

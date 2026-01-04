@@ -22,14 +22,19 @@ class AgendamentoViewSet(viewsets.ModelViewSet):
         """
         user = self.request.user
 
+        qs = Agendamento.objects.all()  
+
         if hasattr(user, 'paciente'):
             return self.queryset.filter(paciente=user.paciente)
 
         if hasattr(user, 'medico'):
             return self.queryset.filter(doutor=user.medico)
 
-        return self.queryset
+        return qs 
 
+    def get_paginated_response(self, data):
+        return Response(data)
+   
     def create(self, request, *args, **kwargs):
         """
         Criação de agendamento
@@ -98,12 +103,11 @@ class AgendamentoViewSet(viewsets.ModelViewSet):
         )
 
 class DisponibilidadeMedicoViewSet(viewsets.ModelViewSet):
-    queryset = DisponibilidadeMedico.objects.filter(is_active=True)
     serializer_class = DisponibilidadeMedicoSerializer
     permission_classes = []
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = DisponibilidadeMedico.objects.filter(is_active=True)
         doutor_id = self.request.query_params.get('doutor')
 
         if doutor_id:

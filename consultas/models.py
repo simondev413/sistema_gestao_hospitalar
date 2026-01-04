@@ -1,4 +1,5 @@
 from django.db import models
+from agendamentos.models import Agendamento
 
 # Create your models here.
 
@@ -14,7 +15,7 @@ class Consulta(models.Model):
     status = models.CharField(max_length=15,choices=STATUS)
     data_consulta = models.DateTimeField(blank=True,null=True)
     data_criacao = models.DateTimeField(auto_now_add=True)
-    agendamento = models.OneToOneField('agendamentos.Agendamento',on_delete=models.CASCADE)
+    agendamento = models.OneToOneField(Agendamento,on_delete=models.CASCADE)
 
 
 class ExameSolicitado(models.Model):
