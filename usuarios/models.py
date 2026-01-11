@@ -7,9 +7,6 @@ from django.contrib.auth.models import (
     Group,Permission)
 
 
-
-
-
 # Aqui criamos as entidades de Usuários
 class UsuarioManager(BaseUserManager):
     def create_user(self,email,password = None,**extra_fields):
@@ -39,13 +36,13 @@ class Usuario(AbstractBaseUser,PermissionsMixin):
     Model genérico para todo usuário do sistema
     """
     GENERO_CHOICES = {
-        'M':'Masculino',
-        'F':'Feminino'
+        ('M','Masculino'),
+        ('F','Feminino')
     }
     TIPO_CHOICES = {
-        'admin':'Administrador',
-        'funcionario':'Funcionário',
-        'paciente':'Paciente'
+        ('admin','Administrador'),
+        ('funcionario','Funcionário'),
+        ('paciente','Paciente')
     }
 
     nome = models.CharField(max_length=45,verbose_name='Primeiro Nome')
@@ -54,8 +51,8 @@ class Usuario(AbstractBaseUser,PermissionsMixin):
     email = models.EmailField(unique=True)
     tipo = models.CharField(max_length=15,choices=TIPO_CHOICES)
     genero = models.CharField(max_length=12,choices=GENERO_CHOICES)
-    img = models.ImageField(upload_to=f'statics/imgs/usuarios')
-    data_nascimento = models.DateField(verbose_name='Data de Nascimento')
+    img = models.ImageField(upload_to=f'statics/imgs/usuarios',null=True,blank=True)
+    data_nascimento = models.DateField(null=True, blank=True, verbose_name='Data de Nascimento')
     data_criacao = models.DateTimeField(auto_now_add=True)
     ultima_atualizacao = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True,verbose_name='Usuário Ativo')
@@ -85,29 +82,28 @@ class Funcionario(models.Model):
     Model genérico para todo funcionario hospitalar (recepcionistas,médicos,enfermeiros, etc.)
     
     """
-    CARGOS_CHOICES = {
-        'administrativo':'Administrativo',
-        'enfermeiro':'Enfermeiro',
-        'farmaceutico':'Farmaceútico',
-        'gestor':'Gestor',
-        'medico':'Médico',
-        'recepcionista':'Recepcionista',
-        'tecnico':'Técnico',
 
-    }
+    CARGOS_CHOICES = (
+        ('financeiro', 'Financeiro'),
+        ('enfermeiro', 'Enfermeiro'),
+        ('farmaceutico', 'Farmacêutico'),
+        ('medico', 'Médico'),
+        ('recepcionista', 'Recepcionista'),
+    )
+
     
-    DEPARTAMENTOS = {
-        'recepcao':'Recepção',
-        'cardiologia':'Cardiologia',
-        'farmacia':'Farmácia',
-        'laboratorio':'Laboratório'
-    }
-    TURNOS_CHOICES = {
-        'manhã':'Manhã',
-        'tarde':'Tarde',
-        'noite':'Noite',
-        'rotativo':'Rotativo'
-    }
+    DEPARTAMENTOS = (
+        ('recepcao', 'Recepção'),
+        ('cardiologia', 'Cardiologia'),
+        ('farmacia', 'Farmácia'),
+        ('laboratorio', 'Laboratório'),
+    )
+    TURNOS_CHOICES = (
+        ('manha', 'Manhã'),
+        ('tarde', 'Tarde'),
+        ('noite', 'Noite'),
+        ('rotativo', 'Rotativo'),
+    )
     usuario = models.OneToOneField(Usuario,on_delete=models.CASCADE,limit_choices_to={'tipo':'funcionario'})
     cargo = models.CharField(max_length=20,choices=CARGOS_CHOICES)
     departamento = models.CharField(max_length=20,choices=DEPARTAMENTOS)
@@ -123,11 +119,11 @@ class Funcionario(models.Model):
     
 
 class Medico(models.Model):
-    ESPECIALIDADE_CHOICES = {
-        'cardiologia':'Cardiologia',
-        'pediatria':'Pediatria',
-        'clinica_geral':'Clínica Geral'
-    }
+    ESPECIALIDADE_CHOICES = (
+        ('cardiologia', 'Cardiologia'),
+        ('pediatria', 'Pediatria'),
+        ('clinica_geral', 'Clínica Geral'),
+    )
     funcionario = models.OneToOneField(Funcionario,on_delete=models.CASCADE,limit_choices_to={'cargo':'medico' or 'Médico'})
     especialidade = models.CharField(max_length=30)
     num_ordem_medicos = models.CharField(max_length=50,verbose_name='Número da ordem dos médicos')
@@ -137,12 +133,12 @@ class Medico(models.Model):
         return self.funcionario.usuario.mostar_nome_completo()
 
 class Recepcionista(models.Model):
-    POSTOS_CHOICES = {
-        'principal':'Principal',
-        'emergencia':'Emergência',
-        'exames':'Exames',
-        'internamento':'Internamento'
-    }
+    POSTOS_CHOICES = (
+        ('principal', 'Principal'),
+        ('emergencia', 'Emergência'),
+        ('exames', 'Exames'),
+        ('internamento', 'Internamento'),
+    )
 
     funcionario = models.OneToOneField(Funcionario,on_delete=models.CASCADE)
     posto_atendimento = models.CharField(max_length=30,choices=POSTOS_CHOICES)
@@ -151,16 +147,16 @@ class Recepcionista(models.Model):
         return self.funcionario.usuario.mostar_nome_completo()
 
 class Paciente(models.Model):
-    TIPO_SANGUINEO_CHOICES = {
-        'a+':'+A',
-        'a-':'A-',
-        'b-':'B-',
-        'ab+':'AB+',
-        'ab-':'AB-',
-        'o+':'O+',
-        'o-':'O-'
-        
-    }
+    TIPO_SANGUINEO_CHOICES = (
+        ('A+', 'A+'),
+        ('A-', 'A-'),
+        ('B+', 'B+'),
+        ('B-', 'B-'),
+        ('AB+', 'AB+'),
+        ('AB-', 'AB-'),
+        ('O+', 'O+'),
+        ('O-', 'O-'),
+    )
 
     usuario = models.OneToOneField(Usuario,on_delete=models.CASCADE)
     cod_medico = models.CharField(max_length=32,verbose_name='Código único de identificação do paciente ')
