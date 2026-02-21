@@ -25,7 +25,7 @@ O sistema foi projetado para suportar múltiplos perfis de acesso, garantindo se
 
 ```bash
 git clone https://github.com/simondev413/sistema_gestao_hospitalar.git
-cd sgh-api
+cd sistema_gestao_hospitalar
 ```
 
 ### 2. Criar e ativar o ambiente virtual
