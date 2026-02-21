@@ -24,7 +24,7 @@ O sistema foi projetado para suportar múltiplos perfis de acesso, garantindo se
 ### 1. Clonar o repositório
 
 ```bash
-git clone https://github.com/seu-repo/sgh-api.git
+git clone https://github.com/simondev413/sistema_gestao_hospitalar.git
 cd sgh-api
 ```
 
